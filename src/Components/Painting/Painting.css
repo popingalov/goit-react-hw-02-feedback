@@ -1,5 +1,6 @@
-.transaction {
+.Painting {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 200px;
+  list-style: none;
+  background-color: brown;
 }
