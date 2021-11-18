@@ -1,0 +1,10 @@
+.tr {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 200px;
+  border: solid 2px black;
+  border-right: solid 0px black;
+}
+.td {
+  border-right: solid 2px black;
+}
