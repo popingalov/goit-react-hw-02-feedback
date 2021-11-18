@@ -5,6 +5,7 @@ import ColorPicker from 'components/ColorPicker/ColorPicker';
 import Alert from './components/Alert/Alert';
 import Container from 'components/Container/Container';
 import Box from './components/Box/Box';
+import Counter from './components/Counter/Counter';
 const colorPickerOptions = [
   { label: 'red', color: '#F44336' },
   { label: 'green', color: '#4CAF50' },
@@ -16,6 +17,7 @@ const colorPickerOptions = [
 export default function App() {
   return (
     <Container>
+      <Counter startValue={1} />
       <Section title="топ продаж">
         <PaintingList items={paintings} />
       </Section>
