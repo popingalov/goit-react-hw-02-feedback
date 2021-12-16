@@ -1,37 +1,55 @@
-import paintings from './paintings.json';
-import PaintingList from './components/Painting/PaintingList';
-import Section from './components/Section';
-import ColorPicker from 'components/ColorPicker/ColorPicker';
-import Alert from './components/Alert/Alert';
-import Container from 'components/Container/Container';
-import Box from './components/Box/Box';
-import Counter from './components/Counter/Counter';
-import DropDown from 'components/DropDown/DropDown';
-const colorPickerOptions = [
-  { label: 'red', color: '#F44336' },
-  { label: 'green', color: '#4CAF50' },
-  { label: 'blue', color: '#2196F3' },
-  { label: 'grey', color: '#607D8B' },
-  { label: 'pink', color: '#E91E63' },
-  { label: 'indigo', color: '#3F51B5' },
-];
-export default function App() {
-  return (
-    <Container>
-      <DropDown />
-      <Counter startValue={1} />
-      <Section title="топ продаж">
-        <PaintingList items={paintings} />
-      </Section>
-      <Alert text="Шеф все пропало!" type="success" />
-      <Alert text="Шеф все пропало!" type="warning" />
-      <Alert text="Шеф все пропало!" type="error" />
-      <ColorPicker options={colorPickerOptions} />
-      <ColorPicker options={colorPickerOptions} />
-      <Section title="Hi man" />
-      <Box type="small" classNames="big red" styles={{ color: '#fff' }} />
-      <Box type="medium" />
-      <Box type="large" />
-    </Container>
-  );
+import React, { Component } from 'react';
+import Section from './components/Section/Section';
+import FeedbackOptions from './components/FeedbackOptions';
+import Statistics from './components/Statistics/Statistics';
+import Notification from './components/Notification/Notification';
+
+export class App extends Component {
+  state = {
+    good: 0,
+    neutral: 0,
+    bad: 0,
+  };
+
+  addFeedback = type => {
+    this.setState(prevState => ({ [type]: prevState[type] + 1 }));
+  };
+
+  countTotalFeedback = () => {
+    return Object.values(this.state).reduce((acc, value) => (acc += value), 0);
+  };
+
+  countPositiveFeedbackPercentage = () => {
+    const total = this.countTotalFeedback();
+    return total > 0
+      ? Math.round((this.state.good / (total - this.state.neutral)) * 100)
+      : 0;
+  };
+
+  render() {
+    const total = this.countTotalFeedback();
+    return (
+      <div>
+        <Section title="Please leave feedback">
+          <FeedbackOptions
+            options={this.state}
+            onLeaveFeedback={this.addFeedback}
+          />
+        </Section>
+        <Section title="Statistics">
+          {total > 0 ? (
+            <Statistics
+              options={this.state}
+              total={total}
+              positivePercentage={this.countPositiveFeedbackPercentage()}
+            ></Statistics>
+          ) : (
+            <Notification message="No feedback given" />
+          )}
+        </Section>
+      </div>
+    );
+  }
 }
+
+export default App;
