@@ -5,7 +5,7 @@ import s from './FeedbackOptions.module.css';
 function FeedbackOptions({ options, onLeaveFeedback }) {
   return (
     <div>
-      {Object.keys(options).map(key => (
+      {options.map(key => (
         <button
           key={key}
           type="button"
@@ -14,7 +14,7 @@ function FeedbackOptions({ options, onLeaveFeedback }) {
             onLeaveFeedback(key);
           }}
         >
-          {`${key}`}
+          {key}
         </button>
       ))}
     </div>
@@ -22,8 +22,8 @@ function FeedbackOptions({ options, onLeaveFeedback }) {
 }
 
 FeedbackOptions.propTypes = {
-  options: PropTypes.object.isRequired,
   onLeaveFeedback: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default FeedbackOptions;

@@ -21,9 +21,7 @@ export class App extends Component {
 
   countPositiveFeedbackPercentage = () => {
     const total = this.countTotalFeedback();
-    return total > 0
-      ? Math.round((this.state.good / (total - this.state.neutral)) * 100)
-      : 0;
+    return total > 0 ? Math.round((this.state.good / total) * 100) : 0;
   };
 
   render() {
@@ -32,14 +30,16 @@ export class App extends Component {
       <div>
         <Section title="Please leave feedback">
           <FeedbackOptions
-            options={this.state}
+            options={Object.keys(this.state)}
             onLeaveFeedback={this.addFeedback}
           />
         </Section>
         <Section title="Statistics">
           {total > 0 ? (
             <Statistics
-              options={this.state}
+              good={this.state.good}
+              neutral={this.state.neutral}
+              bad={this.state.bad}
               total={total}
               positivePercentage={this.countPositiveFeedbackPercentage()}
             ></Statistics>

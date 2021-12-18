@@ -1,13 +1,17 @@
 import PropTypes from 'prop-types';
 
 export default function Statistics({
-  options,
+  bad,
+  neutral,
+  good,
   total = 0,
   positivePercentage = 0,
 }) {
   return (
     <div>
-      {renderStatistics(options)}
+      <p>Bad:{bad}</p>
+      <p>Good:{good}</p>
+      <p>Neutral:{neutral}</p>
       <p>Total: {total}</p>
       <p>Positive feedback: {positivePercentage}%</p>
     </div>
@@ -15,15 +19,9 @@ export default function Statistics({
 }
 
 Statistics.propTypes = {
-  options: PropTypes.object.isRequired,
-  total: PropTypes.number.isRequired,
-  positivePercentage: PropTypes.number.isRequired,
-};
-
-const renderStatistics = function (options) {
-  return Object.keys(options).map(key => (
-    <p key={key}>
-      {key}: {options[key]}
-    </p>
-  ));
+  bad: PropTypes.number.isRequired,
+  good: PropTypes.number.isRequired,
+  neutral: PropTypes.number.isRequired,
+  positivePercentage: PropTypes.number,
+  total: PropTypes.number,
 };
